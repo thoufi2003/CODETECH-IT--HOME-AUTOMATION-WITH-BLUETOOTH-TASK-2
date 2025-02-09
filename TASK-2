@@ -1,0 +1,54 @@
+const int relay1 = 2;  // Relay 1 connected to pin 2
+const int relay2 = 3;  // Relay 2 connected to pin 3
+const int led1 = 4;    // LED 1 connected to pin 4
+const int led2 = 5;    // LED 2 connected to pin 5
+
+void setup() {
+  // Initialize relay and LED pins as OUTPUT
+  pinMode(relay1, OUTPUT);
+  pinMode(relay2, OUTPUT);
+  pinMode(led1, OUTPUT);
+  pinMode(led2, OUTPUT);
+
+  // Turn off all relays and LEDs at the start
+  digitalWrite(relay1, LOW);
+  digitalWrite(relay2, LOW);
+  digitalWrite(led1, LOW);
+  digitalWrite(led2, LOW);
+
+  // Start Serial communication
+  Serial.begin(9600);
+  Serial.println("Bluetooth A is Connected");
+}
+
+void loop() {
+  // Check if data is available from Serial Monitor
+  if (Serial.available() > 0) {
+    char command = Serial.read(); // Read the received character
+
+    // Process the command
+    if (command == 'A') {
+      digitalWrite(relay1, HIGH);  // Turn ON Relay 1
+      digitalWrite(led1, HIGH);   // Turn ON LED 1
+      Serial.println("Relay 1 and LED 1 ON");
+    } 
+    else if (command == 'B') {
+      digitalWrite(relay1, LOW);   // Turn OFF Relay 1
+      digitalWrite(led1, LOW);    // Turn OFF LED 1
+      Serial.println("Relay 1 and LED 1 OFF");
+    } 
+    else if (command == 'C') {
+      digitalWrite(relay2, HIGH); // Turn ON Relay 2
+      digitalWrite(led2, HIGH);  // Turn ON LED 2
+      Serial.println("Relay 2 and LED 2 ON");
+    } 
+    else if (command == 'D') {
+      digitalWrite(relay2, LOW);  // Turn OFF Relay 2
+      digitalWrite(led2, LOW);   // Turn OFF LED 2
+      Serial.println("Relay 2 and LED 2 OFF");
+    } 
+    else {
+      Serial.println("Invalid command. Use A, B, C, or D.");
+    }
+  }
+}
